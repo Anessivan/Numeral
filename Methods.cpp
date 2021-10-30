@@ -42,7 +42,6 @@ std::vector<point> RungeKutta2_1(const double x_start, const double U_start, dou
 {
 	std::vector<point> points;
 	double x = x_start;
-	double U = U_start;
 	point currPoint(x_start, U_start);
 	points.push_back(currPoint);
     int i = 1;
@@ -59,7 +58,6 @@ std::vector<point> RungeKutta2_2(const double x_start, const double U_start, dou
 {
 	std::vector<point> points;
 	double x = x_start;
-	double V = U_start;
 	point currPoint(x_start, U_start);
 	points.push_back(currPoint);
 	int i = 1;
