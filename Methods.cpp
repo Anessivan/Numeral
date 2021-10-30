@@ -21,6 +21,18 @@ point PointRungeKutta2_2(const double x, const double y, double step)// one step
     return res;
 }
 
+point PointRungeKutta4(const double x, const double y, double step)// one step for RungeKutta4
+{
+    double k1, k2, k3 ,k4;
+    k1 = func(x, y);
+    k2 = func(x + step / 2, y + step / 2 * k1);
+    k3 = func(x + step / 2, y + step / 2 * k2);
+    k4 = func(x + step, y + step * k3);
+    double V = y + step / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
+    point res(x + step, V);
+    return res;
+}
+
 std::vector<point> EulerMethod(const double x_start, const double U_start, double step, double stop)
 {
 	std::vector<point> points;

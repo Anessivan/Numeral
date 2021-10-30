@@ -23,6 +23,8 @@ point PointRungeKutta2_1(const double x_start, const double y_start, double step
 
 point PointRungeKutta2_2(const double x_start, const double y_start, double step);// one step for RungeKutta2_2
 
+point PointRungeKutta4(const double x_start, const double y_start, double step);// one step for RungeKutta4
+
 std::vector<point> EulerMethod(const double x_start, const double y_start, double step, double stop);
 
 std::vector<point> RungeKutta2_1(const double x_start, const double y_start, double step, double stop); // RungeKutta second order type 1
