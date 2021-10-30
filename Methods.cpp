@@ -70,6 +70,11 @@ std::vector<point> RungeKutta2_2(const double x_start, const double U_start, dou
 	return points;
 }
 
+std::vector<point> EulerMethod_control(double x_start, double U_start, double step_start, double stop)
+{
+	
+}
+
 double func(const double x, const double V)
 {
 	return 0.0;

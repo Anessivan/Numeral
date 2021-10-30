@@ -8,7 +8,7 @@ struct point
 public:
 	double x;
 	double U;
-	point(const double xs, const double Us)
+	point(const double xs = 0, const double Us = 0)
 	{
 		x = xs;
 		U = Us;
@@ -28,3 +28,5 @@ std::vector<point> EulerMethod(const double x_start, const double y_start, doubl
 std::vector<point> RungeKutta2_1(const double x_start, const double y_start, double step, double stop); // RungeKutta second order type 1
 
 std::vector<point> RungeKutta2_2(const double x_start, const double y_start, double step, double stop);// RungeKutta second order type 2
+
+std::vector<point> EulerMethod_control(double x_start, double U_start, double step_start, double stop);
