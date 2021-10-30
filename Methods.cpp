@@ -1,5 +1,26 @@
 #include "Methods.h"
 
+point PointEulerMethod(const double x, const double y, double step) // one step for Euler Method
+{
+    double V = y + step * func(x, y);
+    point res(x + step, V);
+    return res;
+}
+
+point PointRungeKutta2_1(const double x, const double y, double step) // one step for RungeKutta2_1
+{
+    double V = y + step / 2 * (func(x, y) + func(x + step, y + step * func(x, y)));
+    point res(x + step, V);
+    return res;
+}
+
+point PointRungeKutta2_2(const double x, const double y, double step)// one step for RungeKutta2_2
+{
+    double V = y + step * func(x + step / 2, y + step / 2 * func(x, y));
+    point res(x + step, V);
+    return res;
+}
+
 std::vector<point> EulerMethod(const double x_start, const double U_start, double step, double stop)
 {
 	std::vector<point> points;
@@ -7,12 +28,12 @@ std::vector<point> EulerMethod(const double x_start, const double U_start, doubl
 	double U = U_start;
 	point currPoint(x_start, U_start);
 	points.push_back(currPoint);
+    int i = 1;
 	for (x; x <= stop; x += step)
 	{
-		U = U + U * func(x, U);
-		currPoint.x = x;
-		currPoint.U = U;
+		currPoint = PointEulerMethod(x, points[i - 1].U, step);
 		points.push_back(currPoint);
+        i++;
 	}
 	return points;
 }
@@ -24,12 +45,12 @@ std::vector<point> RungeKutta2_1(const double x_start, const double U_start, dou
 	double U = U_start;
 	point currPoint(x_start, U_start);
 	points.push_back(currPoint);
+    int i = 1;
 	for (x; x <= stop; x += step)
 	{
-		U = U + step / 2 * (func(x, U) + func(x + step, U + step * func(x, U)));
-		currPoint.x = x;
-		currPoint.U = U;
+		currPoint = PointRungeKutta2_1(x, points[i - 1].U, step);
 		points.push_back(currPoint);
+        i++;
 	}
 	return points;
 }
@@ -41,12 +62,12 @@ std::vector<point> RungeKutta2_2(const double x_start, const double U_start, dou
 	double V = U_start;
 	point currPoint(x_start, U_start);
 	points.push_back(currPoint);
+	int i = 1;
 	for (x; x <= stop; x += step)
 	{
-		V = V + step * func(x + step / 2, V + step / 2 * func(x, V));
-		currPoint.x = x;
-		currPoint.U = V;
+		currPoint = PointRungeKutta2_2(x, points[i - 1].U, step);
 		points.push_back(currPoint);
+        i++;
 	}
 	return points;
 }
