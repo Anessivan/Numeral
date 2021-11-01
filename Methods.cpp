@@ -87,7 +87,7 @@ std::vector<point> EulerMethod_control(double x_start, double U_start, double st
 	
 }
 
-double func(const double x, const double V)
+double func(const double x, const double V) // rhs
 {
 	return 0.0;
 }
