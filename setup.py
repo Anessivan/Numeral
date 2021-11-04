@@ -4,7 +4,7 @@ from setuptools._distutils.core import setup, Extension
 ext_modules = [
     Extension(
         'rungekutta4', # имя библиотеки собранной pybind11
-        ['Source.cpp', 'Methods.cpp'], # Тестовый файлик который компилируем
+        ['Source.cpp'], # Тестовый файлик который компилируем
         include_dirs=[pybind11.get_include()],  # не забываем добавить инклюды pybind11
         language='c++', # Указываем язык
         extra_compile_args=['-std=c++14'], # флаг с++11

@@ -4,13 +4,13 @@
 #include <pybind11/stl.h>
 
 
-#include "Methods.h"
+#include "Methods.cpp"
 
 
 PYBIND11_MODULE(rungekutta4, m)
 {
-    m.def("RungeKutta4", &RungeKutta4);
-    m.def("pointRungeKutta4", &pointRungeKutta4);
-    m.def("est", &est);
-    m.def("func", &func);
+    m.def("rungeKutta4", &RungeKutta4);
+    //m.def("pointRungeKutta4", &pointRungeKutta4);
+    //m.def("est", &est);
+    //m.def("func", &func);
 };
