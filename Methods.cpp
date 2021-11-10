@@ -145,6 +145,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             x -= step;
             step /= 2.0;
             halfCount++;
+            halfData.push_back(halfCount);
             i--;
             continue;
         }
@@ -153,9 +154,9 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
         double halfPoint = pointRungeKutta4(x, points[i - 1], step / 2, sigma, a);
         halfPoint = pointRungeKutta4(x, halfPoint, step / 2, sigma, a);
 
-        if(fabs(S) <= (control / 32.0))
+        if(S <= (control / 32.0))
         {
-             step *= 2;
+             step *= 2.0;
              doubleCount++;
         }
 
@@ -163,7 +164,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
         number.push_back(i);
         pointsGood.push_back(halfPoint);
         estimationData.push_back(S);
-        halfData.push_back(halfCount);
+
         doubleData.push_back(doubleCount);
         xData.push_back(x);
 
