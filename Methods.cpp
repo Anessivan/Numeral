@@ -173,8 +173,8 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
         i++;
 
-        while((x + step > x_end) && (x < x_end - eps))
-            step = step / 2;
+        while((x + step > x_end) && (x < x_end - eps) && eps)
+            step = step / 2.0;
 
 
     }
