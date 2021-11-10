@@ -120,10 +120,10 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
     double step = step_start;
     double currPoint =  U_start;
 	points.push_back(currPoint);
-    pointsGood.push_back(currPoint)
+    pointsGood.push_back(currPoint);
     xData.push_back(x_start);
     number.push_back(0.0);
-    stepdata.push_back(step);
+    stepData.push_back(step);
     estimationData.push_back(0.0);
     halfData.push_back(0.0);
     doubleData.push_back(0.0);
