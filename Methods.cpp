@@ -1,5 +1,5 @@
 
-
+#define _USE_MATH_DEFINES
 
 
 
@@ -99,8 +99,8 @@ double pointRungeKutta4(const double x, const double y, double step, double sigm
 double est(double x, double U, double step, double sigma, double a)
 {
     double currPoint = pointRungeKutta4(x, U, step, sigma, a);
-    double halfPoint = pointRungeKutta4(x, U, step / 2, sigma, a);
-    halfPoint = pointRungeKutta4(x, halfPoint, step / 2, sigma, a);
+    double halfPoint = pointRungeKutta4(x, U, step / 2.0, sigma, a);
+    halfPoint = pointRungeKutta4(x + step / 2.0, halfPoint, step / 2.0, sigma, a);
     double res = fabs(halfPoint - currPoint) / 15.0;
     return res;
 }
@@ -120,11 +120,20 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
     double step = step_start;
     double currPoint =  U_start;
 	points.push_back(currPoint);
+    pointsGood.push_back(currPoint)
     xData.push_back(x_start);
+    number.push_back(0.0);
+    stepdata.push_back(step);
+    estimationData.push_back(0.0);
+    halfData.push_back(0.0);
+    doubleData.push_back(0.0);
+
     int i = 1;
     int doubleCount = 0;
     int halfCount = 0;
     double S;
+
+
 
     for(double x = x_start; x < x_end; x += step)
     {
