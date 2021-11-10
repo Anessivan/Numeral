@@ -167,7 +167,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
         number.push_back(i);
         pointsGood.push_back(halfPoint);
         estimationData.push_back(S);
-
+        halfData.push_back(halfCount);
         doubleData.push_back(doubleCount);
         xData.push_back(x);
 
