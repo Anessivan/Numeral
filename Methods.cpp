@@ -85,7 +85,7 @@ std::vector<point> RungeKutta2_2(const double x_start, const double U_start, dou
 
 double func(const double x, const double V, const double sigma, const double a) // rhs
 {
-	return -0.6 * sigma * sqrt(2 * 9.8) / tan(0.5 * a) / tan(0.5 * a) / M_PI / pow(V, 3 / 2);
+	return (((((-0.6 * sigma * sqrt(2 * 9.8)) / tan(0.5 * a)) / tan(0.5 * a)) / M_PI) / pow(V, 3 / 2));
 }
 
 double pointRungeKutta4(const double x, const double y, double step, double sigma, double a)// one step for RungeKutta4
@@ -138,7 +138,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
 
 
-    for(double x = x_start; x < x_end; x += step)
+    for(double x = x_start; (x < x_end) && currPoint > 0; x += step)
     {
         currPoint = pointRungeKutta4(x, points[i - 1], step, sigma, a);
         S = est(x, points[i - 1], step, sigma, a);
@@ -163,6 +163,10 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
              doubleCount++;
         }
 
+        while((x + step > x_end) && (x < x_end - eps) && eps)
+        {
+            step = step / 2.0;
+        }
         points.push_back(currPoint);
         number.push_back(i);
         pointsGood.push_back(halfPoint);
@@ -173,8 +177,6 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
         i++;
 
-        while((x + step > x_end) && (x < x_end - eps) && eps)
-            step = step / 2.0;
 
 
     }
