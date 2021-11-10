@@ -108,7 +108,7 @@ double est(double x, double U, double step, double sigma, double a)
     return res;
 }
 
-std::vector<std::vector<double>> RungeKutta4(const double x_start, const double U_start, const double step_start, const double control, const double x_end, const double sigma, const double a)
+std::vector<std::vector<double>> RungeKutta4(const double x_start, const double U_start, const double step_start, const double control, const double x_end, const double eps, const double sigma, const double a)
 {
     std::vector<double> points;
     std::vector<double> number;
@@ -172,6 +172,9 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
         xData.push_back(x);
 
         i++;
+
+        while((x + step > x_end) && (x < x_end - eps))
+            step = step / 2;
 
 
     }
