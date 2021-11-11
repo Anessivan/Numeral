@@ -11,77 +11,6 @@
 
 
 
-/*double PointEulerMethod(const double x, const double y, double step) // one step for Euler Method
-{
-    double V = y + step * func(x, y);
-    double res =  V;
-    return res;
-}
-
-double PointRungeKutta2_1(const double x, const double y, double step) // one step for RungeKutta2_1
-{
-    double V = y + step / 2 * (func(x, y) + func(x + step, y + step * func(x, y)));
-    double res =  V;
-    return res;
-}
-
-double PointRungeKutta2_2(const double x, const double y, double step)// one step for RungeKutta2_2
-{
-    double V = y + step * func(x + step / 2, y + step / 2 * func(x, y));
-    double res = V;
-    return res;
-}
-
-
-
-std::vector<double> EulerMethod(const double x_start, const double U_start, double step, double stop)
-{
-	std::vector<point> points;
-	double x = x_start;
-	double U = U_start;
-	point currPoint(x_start, U_start);
-	points.push_back(currPoint);
-    int i = 1;
-	for (x; x <= stop; x += step)
-	{
-		currPoint = PointEulerMethod(x, points[i - 1].U, step);
-		points.push_back(currPoint);
-        i++;
-	}
-	return points;
-}
-
-std::vector<point> RungeKutta2_1(const double x_start, const double U_start, double step, double stop)
-{
-	std::vector<point> points;
-	double x = x_start;
-	point currPoint(x_start, U_start);
-	points.push_back(currPoint);
-    int i = 1;
-	for (x; x <= stop; x += step)
-	{
-		currPoint = PointRungeKutta2_1(x, points[i - 1].U, step);
-		points.push_back(currPoint);
-        i++;
-	}
-	return points;
-}
-
-std::vector<point> RungeKutta2_2(const double x_start, const double U_start, double step, double stop)
-{
-	std::vector<point> points;
-	double x = x_start;
-	point currPoint(x_start, U_start);
-	points.push_back(currPoint);
-	int i = 1;
-	for (x; x <= stop; x += step)
-	{
-		currPoint = PointRungeKutta2_2(x, points[i - 1].U, step);
-		points.push_back(currPoint);
-        i++;
-	}
-	return points;
-}*/
 
 double func(const double x, const double V, const double sigma, const double a) // rhs
 {
@@ -124,7 +53,6 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
     double currPoint =  U_start;
 	points.push_back(currPoint);
     pointsGood.push_back(currPoint);
-    xData.push_back(x_start);
     number.push_back(0.0);
     stepData.push_back(step);
     estimationData.push_back(0.0);
@@ -140,8 +68,10 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
     for(double x = x_start; (x < x_end) && currPoint > 0; x += step)
     {
+
+        xData.push_back(x);
         currPoint = pointRungeKutta4(x, points[i - 1], step, sigma, a);
-        S = est(x, points[i - 1], step, sigma, a);
+        S = est(x, points[i - 1], step, sigma, a) * 16.0;
 
         if (S > control)
         {
@@ -149,11 +79,10 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             step /= 2.0;
             halfCount++;
             halfData.push_back(halfCount);
-            i--;
 
         }
-        else
-        {
+       else
+       {
             stepData.push_back(step);
             double halfPoint = pointRungeKutta4(x, points[i - 1], step / 2.0, sigma, a);
             halfPoint = pointRungeKutta4(x + step / 2.0, halfPoint, step / 2.0, sigma, a);
@@ -176,7 +105,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             estimationData.push_back(S);
             halfData.push_back(halfCount);
             doubleData.push_back(doubleCount);
-            xData.push_back(x);
+
 
             i++;
         }
