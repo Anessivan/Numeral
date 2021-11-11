@@ -152,7 +152,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             i--;
 
         }
-        else if
+        else
         {
             stepData.push_back(step);
             double halfPoint = pointRungeKutta4(x, points[i - 1], step / 2.0, sigma, a);
