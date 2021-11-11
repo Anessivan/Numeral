@@ -17,6 +17,8 @@ double func(const double x, const double V, const double sigma, const double a) 
 	return (((((-0.6 * sigma * sqrt(2 * 9.8)) / tan(0.5 * a)) / tan(0.5 * a)) / M_PI) / pow(V, 3 / 2));
 }
 
+
+
 double pointRungeKutta4(const double x, const double y, double step, double sigma, double a)// one step for RungeKutta4
 {
     double k1, k2, k3 ,k4;
@@ -72,7 +74,7 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
 
         currPoint = pointRungeKutta4(x, points[i - 1], step, sigma, a);
-        S = est(x, points[i - 1], step, sigma, a) * 16.0;
+        S = est(x, points[i - 1], step, sigma, a) * 32.0;
 
         if (S > control)
         {
