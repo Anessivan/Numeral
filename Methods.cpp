@@ -14,19 +14,19 @@
 
 double func(const double x, const double V, const double sigma, const double a) // rhs
 {
-	return (((((-0.6 * sigma * sqrt(2 * 9.8)) / tan(0.5 * a)) / tan(0.5 * a)) / M_PI) / pow(V, 3 / 2));
+	double res = - 0.6 * sigma * sqrt(2 * 9.8) / tan(0.5 * a) / tan(0.5 * a) / M_PI / sqrt(powf(V, 3));
+    return res;
 }
 
 
 
 double pointRungeKutta4(const double x, const double y, double step, double sigma, double a)// one step for RungeKutta4
 {
-    double k1, k2, k3 ,k4;
-    k1 = func(x, y, sigma, a);
-    k2 = func(x + step / 2, y + step / 2 * k1, sigma, a);
-    k3 = func(x + step / 2, y + step / 2 * k2, sigma, a);
-    k4 = func(x + step, y + step * k3, sigma, a);
-    double V = y + step / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
+    double k1 = func(x, y, sigma, a);
+    double k2 = func(x + step / 2.0, y + step / 2.0 * k1, sigma, a);
+    double k3 = func(x + step / 2.0, y + step / 2.0 * k2, sigma, a);
+    double k4 = func(x + step, y + step * k3, sigma, a);
+    double V = y + step / 6.0 * (k1 + 2.0 * k2 + 2.0 * k3 + k4);
     return V;
 }
 
@@ -74,7 +74,8 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
 
         currPoint = pointRungeKutta4(x, points[i - 1], step, sigma, a);
-        S = est(x, points[i - 1], step, sigma, a) * 32.0;
+        double currX = x + step;
+        S = est(x, points[i - 1], step, sigma, a);
 
         if (S > control)
         {
@@ -91,7 +92,11 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             halfPoint = pointRungeKutta4(x + step / 2.0, halfPoint, step / 2.0, sigma, a);
 
 
-
+            xData.push_back(currX);
+            points.push_back(currPoint);
+            number.push_back(i);
+            pointsGood.push_back(halfPoint);
+            estimationData.push_back(S * 16.0);
 
             if(S <= (control / 32.0))
             {
@@ -101,17 +106,14 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
 
 
 
-            while((x + step > x_end) && (x < x_end - eps) && eps)
+            while((currX + step > x_end) && (currX < x_end - eps) && eps)
             {
                 step = step / 2.0;
                 halfCount++;
             }
 
-            xData.push_back(x + step);
-            points.push_back(currPoint);
-            number.push_back(i);
-            pointsGood.push_back(halfPoint);
-            estimationData.push_back(S);
+           
+            
             halfData.push_back(halfCount);
             doubleData.push_back(doubleCount);
 
