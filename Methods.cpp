@@ -72,7 +72,8 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
     for(double x = x_start; (x < x_end) && currPoint > 0; x += step)
     {
 
-
+        if(points[i - 1] <= 0.0) 
+            break;
         currPoint = pointRungeKutta4(x, points[i - 1], step, sigma, a);
         double currX = x + step;
         S = est(x, points[i - 1], step, sigma, a);
@@ -83,42 +84,51 @@ std::vector<std::vector<double>> RungeKutta4(const double x_start, const double 
             step /= 2.0;
             halfCount++;
             halfData.push_back(halfCount);
-
+            continue;
         }
-       else
-       {
-            stepData.push_back(step);
-            double halfPoint = pointRungeKutta4(x, points[i - 1], step / 2.0, sigma, a);
-            halfPoint = pointRungeKutta4(x + step / 2.0, halfPoint, step / 2.0, sigma, a);
+       //else
+       //{
+        stepData.push_back(step);
+        double halfPoint = pointRungeKutta4(x, points[i - 1], step / 2.0, sigma, a);
+        halfPoint = pointRungeKutta4(x + step / 2.0, halfPoint, step / 2.0, sigma, a);
 
 
-            xData.push_back(currX);
-            points.push_back(currPoint);
-            number.push_back(i);
-            pointsGood.push_back(halfPoint);
-            estimationData.push_back(S * 16.0);
+        xData.push_back(x);
+        points.push_back(currPoint);
+        number.push_back(i);
+        pointsGood.push_back(halfPoint);
+        estimationData.push_back(S * 16.0);
 
-            if(S <= (control / 32.0))
-            {
-                step *= 2.0;
-                doubleCount++;
-            }
+        if(S <= (control / 32.0))
+        {
+            step *= 2.0;
+            doubleCount++;
+        }
 
 
 
-            while((currX + step > x_end) && (currX < x_end - eps) && eps)
-            {
-                step = step / 2.0;
-                halfCount++;
-            }
+        while((currX + step > x_end) && (currX < x_end - eps) && eps)
+        {
+            step = step / 2.0;
+            halfCount++;
+        }
+
+
+        double nextstep = pointRungeKutta4(x, points[i], step / 2.0, sigma, a);
+
+        while((nextstep <= 0) && (currX > 0 + eps) && eps)
+        {
+            step = step / 2.0;
+            halfCount++;
+        }
 
            
             
-            halfData.push_back(halfCount);
-            doubleData.push_back(doubleCount);
+        halfData.push_back(halfCount);
+        doubleData.push_back(doubleCount);
 
-            i++;
-        }
+        i++;
+        //}
 
 
     }
